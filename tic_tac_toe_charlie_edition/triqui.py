@@ -8,7 +8,7 @@ from gameStatus import *
 XO = 'x'
 winner = None
 draw = False
-width = 450
+width = 400
 height = 400
 line_color = (10,10,10)
 
@@ -20,7 +20,7 @@ pg.init()
 fps = 60
 CLOCK = pg.time.Clock()
 screen = pg.display.set_mode((width, height+100), 0, 32)
-pg.display.set_caption('Tricky')
+pg.display.set_caption('Triqui')
 
 #Load images
 opening, x_img, o_img = loadImages(width, height)

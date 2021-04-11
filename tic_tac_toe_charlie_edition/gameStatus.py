@@ -28,6 +28,8 @@ def resetGame(screen, width, height, line_color, XO, winner, draw, opening):
     winner = None
     board = [[None]*3, [None]*3, [None]*3]
 
+    drawStatus(XO, winner, draw, screen, width)
+
     return XO, draw, winner, board
 
 
@@ -45,7 +47,7 @@ def checkWin(board, winner, draw, height, width, XO, screen):
     for col in range(3):
         if ((board[0][col] == board[1][col] == board[2][col]) and board[0][col] is not None):
             winner = board[0][col]
-            pg.draw.line(screen, (250,0,0), (0, (col+1)*height/3 - height/6), (width, (col+1)*height/3 - height/6), 4)
+            pg.draw.line(screen, (250,0,0), ((col+1)*width/3 - width/6, 0), ((col+1)*width/3 - width/6, height), 4)
             break
 
     '''check for winner in diagonals'''
