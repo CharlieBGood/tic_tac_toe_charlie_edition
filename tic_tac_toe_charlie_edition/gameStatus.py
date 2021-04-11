@@ -19,7 +19,7 @@ def gameStart(screen, width, height, line_color, XO, winner, draw, opening):
 
 
 # Resets the game
-def resetGame(screen, width, height, line_color, XO, winner, draw):
+def resetGame(screen, width, height, line_color, XO, winner, draw, opening):
 
     time.sleep(3)
     XO = 'x'
@@ -28,10 +28,12 @@ def resetGame(screen, width, height, line_color, XO, winner, draw):
     winner = None
     board = [[None]*3, [None]*3, [None]*3]
 
+    return XO, draw, winner, board
+
 
 #Checks if someone has won
 def checkWin(board, winner, draw, height, width, XO, screen):
-    
+
     '''check for winner in rows'''
     for row in range (3):
         if ((board[row][0] == board[row][1] == board[row][2]) and board[row][0] is not None):
@@ -61,6 +63,8 @@ def checkWin(board, winner, draw, height, width, XO, screen):
 
     drawStatus(XO, winner, draw, screen, width)
 
+    return winner, draw
+
 
 #Defines the actions when user clicks the mouse
 def userClick(width, height, board, XO, screen, x_img, o_img, winner, draw):
@@ -79,18 +83,18 @@ def userClick(width, height, board, XO, screen, x_img, o_img, winner, draw):
         col = None
     
     '''get row of mouse click'''
-    if(x < height/3):
+    if(y < height/3):
         row = 1
-    elif(x < height*2/3):
+    elif(y < height*2/3):
         row = 2
-    elif(x < height):
+    elif(y < height):
         row = 3
     else:
         row = None
 
     if(row and col and board[row-1][col-1] is None):
         XO = drawXO(row, col, board, XO, width, height, screen, x_img, o_img)
-        checkWin(board, winner, draw, height, width, XO, screen)
+        winner, draw = checkWin(board, winner, draw, height, width, XO, screen)
 
-
+    return XO, winner, draw
 
