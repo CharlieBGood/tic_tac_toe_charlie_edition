@@ -4,7 +4,7 @@ from pygame.locals import *
 from draws import *
 
 #Starts the game
-def gameStart(screen, width, height, line_color, XO, winner, draw, opening):
+def gameStart(screen, width, height, line_color, opening, session):
     '''define the intro image and position its top left corner in 0,0'''
     screen.blit(opening, (0,0))
     pg.display.update()
@@ -15,61 +15,68 @@ def gameStart(screen, width, height, line_color, XO, winner, draw, opening):
     drawMesh(screen, line_color, width, height)
 
     '''draw status of the game inside screen'''
-    drawStatus(XO, winner, draw, screen, width)
+    drawStatus(screen, width, session)
+    
+    drawScoreboard(screen, width, session)
 
 
 # Resets the game
-def resetGame(screen, width, height, line_color, XO, winner, draw, opening):
+def resetGame(screen, width, height, line_color, opening, session):
 
     time.sleep(3)
-    XO = 'x'
-    draw = False
-    gameStart(screen, width, height, line_color, XO, winner, draw, opening)
-    winner = None
-    board = [[None]*3, [None]*3, [None]*3]
+    session.XO = 'x'
+    session.draw = False
+    session.winner = None
+    session.resetBoard()
+    gameStart(screen, width, height, line_color, opening, session)
 
-    drawStatus(XO, winner, draw, screen, width)
+    drawStatus(screen, width, session)
 
-    return XO, draw, winner, board
+    return session
 
 
 #Checks if someone has won
-def checkWin(board, winner, draw, height, width, XO, screen):
+def checkWin(height, width, screen, session):
 
     '''check for winner in rows'''
     for row in range (3):
-        if ((board[row][0] == board[row][1] == board[row][2]) and board[row][0] is not None):
-            winner = board[row][0]
+        if ((session.board[row][0] == session.board[row][1] == session.board[row][2]) and session.board[row][0] is not None):
+            session.setWinner(session.turn)
             pg.draw.line(screen, (250,0,0), (0, (row+1)*height/3 - height/6), (width, (row+1)*height/3 - height/6), 4)
             break
     
     '''check for winner in columns'''
     for col in range(3):
-        if ((board[0][col] == board[1][col] == board[2][col]) and board[0][col] is not None):
-            winner = board[0][col]
+        if ((session.board[0][col] == session.board[1][col] == session.board[2][col]) and session.board[0][col] is not None):
+            session.setWinner(session.turn)
             pg.draw.line(screen, (250,0,0), ((col+1)*width/3 - width/6, 0), ((col+1)*width/3 - width/6, height), 4)
             break
 
     '''check for winner in diagonals'''
-    if ((board[0][0] == board[1][1] == board[2][2]) and board[0][0] is not None):
-            winner = board[0][0]
+    if ((session.board[0][0] == session.board[1][1] == session.board[2][2]) and session.board[0][0] is not None):
+            session.setWinner(session.turn)
             pg.draw.line(screen,(250,70,70), (50,50), (350,350), 4)
     
-    if ((board[0][2] == board[1][1] == board[2][0]) and board[0][2] is not None):
-            winner = board[0][2]
+    if ((session.board[0][2] == session.board[1][1] == session.board[2][0]) and session.board[0][2] is not None):
+            session.setWinner(session.turn)
             pg.draw.line(screen,(250,70,70), (350,50), (50,350), 4)
     
+    if session.winner == session.playerOne:
+        session.playerOne.addWin()
+    if session.winner == session.playerTwo:
+        session.playerTwo.addWin()    
+            
     '''if all cells have value and there's no winner declare a draw'''
-    if (all([all(row) for row in board]) and winner is None):
-        draw = True
+    if (all([all(row) for row in session.board]) and session.winner is None):
+        session.draw = True
 
-    drawStatus(XO, winner, draw, screen, width)
-
-    return winner, draw
+    drawStatus(screen, width, session)
+    
+    return session
 
 
 #Defines the actions when user clicks the mouse
-def userClick(width, height, board, XO, screen, x_img, o_img, winner, draw):
+def userClick(width, height, screen, x_img, o_img, session):
 
     '''get coordinates of mouse'''
     x,y = pg.mouse.get_pos()
@@ -94,9 +101,10 @@ def userClick(width, height, board, XO, screen, x_img, o_img, winner, draw):
     else:
         row = None
 
-    if(row and col and board[row-1][col-1] is None):
-        XO = drawXO(row, col, board, XO, width, height, screen, x_img, o_img)
-        winner, draw = checkWin(board, winner, draw, height, width, XO, screen)
+    if(row and col and session.board[row-1][col-1] is None):
+        session = drawXO(row, col, width, height, screen, x_img, o_img, session)
+        session = checkWin(height, width, screen, session)
+        session.nextTurn()
 
-    return XO, winner, draw
+    return session
 
