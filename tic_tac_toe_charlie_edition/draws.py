@@ -58,13 +58,13 @@ def drawStatus(screen, width, session):
     else:
         message = session.winner.name.upper() + " Won!"
 
-    font = pg.font.Font(None, 40)
+    font = pg.font.Font('a-attack-graffiti-font/AttackGraffiti-3zRBM.ttf', 45)
     '''render font with message, antialias=True and color'''
     text = font.render(message, 1, (255, 255, 255))
 
     '''fills screen with a color and inside the rect of 4 channels'''
     screen.fill((0,0,0), (0, 400, 500, 100))
-    text_rect = text.get_rect(center=(width/2, 500-50))
+    text_rect = text.get_rect(center=(width/2, 500-60))
     screen.blit(text, text_rect)
 
     
@@ -78,9 +78,11 @@ def drawStatus(screen, width, session):
 
 def drawScoreboard(screen, width, session):
     
+    font = font = pg.font.Font('vanrott-destroy-font/VanrottDestroy-Rpv06.otf', 30)
+    fontVs = pg.font.Font('vanrott-destroy-font/VanrottDestroy-Rpv06.otf', 45)
+    
     '''Draw player One name'''
     playerOneName = session.playerOne.name
-    font = pg.font.Font(None, 30)
     '''render font with message, antialias=True and color'''
     textPOneName = font.render(playerOneName, 1, (0, 0, 0))
     textPOneName_rect = textPOneName.get_rect(center=(width/6, 550-25))
@@ -88,22 +90,19 @@ def drawScoreboard(screen, width, session):
     
     '''Draw player One score'''
     playerOneScore = str(session.playerOne.score)
-    font = pg.font.Font(None, 30)
     '''render font with message, antialias=True and color'''
     textPOneScore = font.render(playerOneScore, 1, (0, 0, 0))
     textPOneScore_rect = textPOneScore.get_rect(center=(width/6, 600-25))
     screen.blit(textPOneScore, textPOneScore_rect)
     
     messageVs = 'VS'
-    font = pg.font.Font(None, 45)
     '''render font with message, antialias=True and color'''
-    textVs = font.render(messageVs, 1, (0, 0, 0))
+    textVs = fontVs.render(messageVs, 1, (0, 0, 0))
     textVs_rect = textVs.get_rect(center=(width/2, 600-50))
     screen.blit(textVs, textVs_rect)
     
     '''Draw player Two name'''
     playerTwoName = session.playerTwo.name 
-    font = pg.font.Font(None, 30)
     '''render font with message, antialias=True and color'''
     textPTwoName = font.render(playerTwoName, 1, (0, 0, 0))
     textPTwoName_rect = textPTwoName.get_rect(center=(width*5/6, 550-25))
@@ -111,7 +110,6 @@ def drawScoreboard(screen, width, session):
     
     '''Draw player Two score'''
     playerTwoScore = str(session.playerTwo.score)
-    font = pg.font.Font(None, 30)
     '''render font with message, antialias=True and color'''
     textPTwoScore = font.render(playerTwoScore, 1, (0, 0, 0))
     textPTwoScore_rect = textPTwoScore.get_rect(center=(width*5/6, 600-25))

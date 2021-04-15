@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from classes import *
+from tkinter import messagebox
 
 #Create the window element
 window = Tk()
@@ -28,9 +29,14 @@ session = Session(pOne, pTwo)
 def getPlayersNames():
     playerOneName = playerOneVar.get()
     playerTwoName = playerTwoVar.get()
-    pOne.setName(playerOneName)
-    pTwo.setName(playerTwoName)
-    window.destroy()
+    if not playerOneName or not playerTwoName:
+        messagebox.showwarning("NO NAME WAS PROBIDED", 'ONE OR MORE PLAYER NAME FIELDS ARE EMPTY' ) 
+    elif len(playerOneName) > 7 or len(playerTwoName) > 7:
+        messagebox.showwarning("STRING TOO LONG", 'NAMES CAN\'T CONTAIN MORE THAN 7 LETTERS' ) 
+    else:        
+        pOne.setName(playerOneName)
+        pTwo.setName(playerTwoName)
+        window.destroy()
 
 
 #Create button

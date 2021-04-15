@@ -6,7 +6,9 @@ from gameStatus import *
 from newSession import *
 
 session = newSession()
-
+if not session.playerOne.name:
+    exit()
+    
 #Global variables
 width = 400
 height = 400
