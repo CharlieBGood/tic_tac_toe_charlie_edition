@@ -50,13 +50,13 @@ def drawXO(row, col, width, height, screen, x_img, o_img, session):
 def drawStatus(screen, width, session):
 
     messageTurn = ''
-    if session.winner == None:
+    if session.winner == None and not session.draw:
         message = session.XO.upper() + "'s Turn"
         messageTurn = session.turn.name
+    elif session.draw:
+        message = "Game Draw!"
     else:
         message = session.winner.name.upper() + " Won!"
-    if session.draw:
-        message = "Game Draw!"
 
     font = pg.font.Font(None, 40)
     '''render font with message, antialias=True and color'''

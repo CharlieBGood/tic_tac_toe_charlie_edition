@@ -33,7 +33,6 @@ while(True):
         elif event.type == MOUSEBUTTONDOWN:
             session = userClick(width, height, screen, x_img, o_img, session)
             if(session.winner or session.draw):
-                print('draw')
                 session = resetGame(screen, width, height, line_color, opening, session)
         pg.display.update()
         CLOCK.tick(fps)

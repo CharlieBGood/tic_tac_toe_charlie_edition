@@ -105,6 +105,6 @@ def userClick(width, height, screen, x_img, o_img, session):
         session = drawXO(row, col, width, height, screen, x_img, o_img, session)
         session = checkWin(height, width, screen, session)
         session.nextTurn()
-
+        drawStatus(screen, width, session)
     return session
 
