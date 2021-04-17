@@ -21,7 +21,8 @@ numpy, opencv-python, pygame, tkinter
 1. Select players images (if not selected standar X's and O's will be used)
 1. Enjoy!
 
-
+#
+#
 
 TechVidvan's code can be found here: https://techvidvan.com/tutorials/python-game-project-tic-tac-toe/
 
