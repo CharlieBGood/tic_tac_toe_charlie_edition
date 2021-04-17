@@ -1,12 +1,21 @@
 import pygame as pg, sys
+import os.path
+from os import path
 
 
 #Returns images
-def loadImages(width, height):
+def loadImages(width, height, session):
     '''Load images'''
     opening = pg.image.load('images/opening.png')
-    x_img = pg.image.load('images/X.png')
-    o_img = pg.image.load('images/O.png')
+    if path.exists(session.playerOne.imgPath):
+        x_img = pg.image.load(session.playerOne.imgPath)
+    else:
+        x_img = pg.image.load('images/X.png')
+        
+    if path.exists(session.playerTwo.imgPath):
+        o_img = pg.image.load(session.playerTwo.imgPath)
+    else:
+        o_img = pg.image.load('images/O.png')
 
     '''Resizing images'''
     x_img = pg.transform.scale(x_img, (80,80))
@@ -27,9 +36,10 @@ def drawMesh(screen, line_color, width, height):
     pg.draw.line(screen, line_color, (0, height*2/3), (width, height*2/3), 7)
 
 
-# draws XO inside the board
+#Draws XO inside the board
 def drawXO(row, col, width, height, screen, x_img, o_img, session):
     
+    '''Getting the pos of the center of the square'''
     posx = width*(row-1)/3 + 30
     posy = height*(col-1)/3 + 30
 
@@ -75,7 +85,7 @@ def drawStatus(screen, width, session):
     
     pg.display.update()
     
-
+#Draws the scoreboard
 def drawScoreboard(screen, width, session):
     
     font = font = pg.font.Font('vanrott-destroy-font/VanrottDestroy-Rpv06.otf', 30)
