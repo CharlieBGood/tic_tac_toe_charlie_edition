@@ -3,5 +3,7 @@ Personal version of the famous game tic tac toe (also known as "triqui" in Colom
 
 
 TechVidvan's code can be found here: https://techvidvan.com/tutorials/python-game-project-tic-tac-toe/
+
 Karan Bhanot's post of its Neural Network can be found here: https://techvidvan.com/tutorials/python-game-project-tic-tac-toe/
+
 Original Neural Network implementation can be found here: https://github.com/kb22/Create-Face-Data-from-Images
