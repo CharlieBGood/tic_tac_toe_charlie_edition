@@ -24,7 +24,6 @@ def gameStart(screen, width, height, line_color, opening, session):
 def resetGame(screen, width, height, line_color, opening, session):
 
     time.sleep(3)
-    session.XO = 'x'
     session.draw = False
     session.winner = None
     session.resetBoard()
